@@ -21,6 +21,7 @@ class RSA:
         # for now
         self.generate_primes()
         self.get_modulus()
+        self.get_totient()
         print(self.p)
         print(self.q)
         print(self.n)
@@ -42,8 +43,8 @@ class RSA:
     # generate another large prime different than p but with same number of digits
     def get_q(self):
         q= number.getPrime(100)
-        # make sure that p and q arent the same length or number
-        while len(q)!=len(self.p) or q==self.p:
+        # make sure that p and q are the same length and not the same number number
+        while len(str(q))!=len(str(self.p)) or q==self.p:
             q= number.getPrime(100)
         self.q=q
 
@@ -51,11 +52,17 @@ class RSA:
     def get_modulus(self):
         n=self.p*self.q
         # sheck to make sure the modulus is larger than the message
-        if len(n) < len(self.m):
-            self.generate_primes()
-            n=self.p*self.q
+        # if len(n) < len(self.m):
+        #     self.generate_primes()
+        #     n=self.p*self.q
         self.n=n
+        
+    # gets the totient
+    def get_totient(self):
+        t=(self.p-1)*(self.q-1)
+        self.t=t
+
 
 x=RSA(message=9)
-# x.generate_primes()
+x.encrypt()
 
