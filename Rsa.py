@@ -7,6 +7,8 @@
 #############
 # for generating primes
 from Crypto.Util import number
+from sympy import isprime
+
 
 #############
 # Class RSA #
@@ -22,9 +24,15 @@ class RSA:
         self.generate_primes()
         self.get_modulus()
         self.get_totient()
-        print(self.p)
-        print(self.q)
-        print(self.n)
+        self.get_encryption_exponent()
+        self.get_ciphertext()
+        print("message(m):" + str(self.m))
+        print("large prime(p):" + str(self.p))
+        print("another large prime(q):" + str(self.q))
+        print("modulus(n):" + str(self.n))
+        print("totient(t):" + str(self.t))
+        print("encryption exponent(e):" + str(self.e))
+        print("ciphertext(c):" + str(self.c))
         return 0
 
     # message decryptor
@@ -62,6 +70,17 @@ class RSA:
         t=(self.p-1)*(self.q-1)
         self.t=t
 
+    def get_encryption_exponent(self):
+        # coprime to t
+        # use isprime function. this will probably be inefficient for now
+        e=self.t
+        e=e-1
+        while(isprime(e)!= True):
+            e=e-1
+        self.e=e
+
+    def get_ciphertext(self):
+        self.c=((self.m)^(self.e))%self.n
 
 # RSA a message
 x=RSA(message=9)
