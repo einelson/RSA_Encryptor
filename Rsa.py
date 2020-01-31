@@ -16,14 +16,15 @@ class RSA:
     # initalize
     def __init__(self,message):
 
-        self.convert_to_num()
-        self.m=message
+        self.m=self.convert_to_binary(message)
 
     # converts message to numberical form
-    def convert_to_num(self):
-        # change message into letter groups a=0, b=1..z=25
-        # group in sets of 2 letters. maybe load a file for this
-        i=0
+    def convert_to_binary(self, message):
+        # change message into binary
+        binary =' '.join(format(ord(x), 'b') for x in message)
+        # each letter is in a list
+        binary=binary.split(' ')
+        return binary
 
 
     # messaege encryptor
@@ -34,7 +35,7 @@ class RSA:
         self.get_totient()
         self.get_encryption_exponent()
         self.get_ciphertext()
-        print("message(m):" + str(self.m))
+        # print("message(m):" + str(self.m))
         print("large prime(p):" + str(self.p))
         print("another large prime(q):" + str(self.q))
         print("modulus(n):" + str(self.n))
@@ -91,6 +92,5 @@ class RSA:
         self.c=((self.m)^(self.e))%self.n
 
 # RSA a message
-x=RSA(message="Hello")
-x.encrypt()
-
+x=RSA(message="Hello World")
+# x.encrypt()
