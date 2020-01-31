@@ -9,14 +9,22 @@
 from Crypto.Util import number
 from sympy import isprime
 
-
 #############
 # Class RSA #
 #############
 class RSA:
     # initalize
     def __init__(self,message):
+
+        self.convert_to_num()
         self.m=message
+
+    # converts message to numberical form
+    def convert_to_num(self):
+        # change message into letter groups a=0, b=1..z=25
+        # group in sets of 2 letters. maybe load a file for this
+        i=0
+
 
     # messaege encryptor
     def encrypt(self):
@@ -33,11 +41,11 @@ class RSA:
         print("totient(t):" + str(self.t))
         print("encryption exponent(e):" + str(self.e))
         print("ciphertext(c):" + str(self.c))
-        return 0
+
 
     # message decryptor
     def decrypt(self):
-        return 1
+        print("here")
 
     # gets p and q, the primes
     def generate_primes(self):
@@ -83,6 +91,6 @@ class RSA:
         self.c=((self.m)^(self.e))%self.n
 
 # RSA a message
-x=RSA(message=9)
+x=RSA(message="Hello")
 x.encrypt()
 
