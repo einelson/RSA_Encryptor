@@ -15,7 +15,7 @@ from sympy import isprime
 class RSA:
     # initalize
     def __init__(self,message):
-
+        # convert message to binary
         self.m=self.convert_to_binary(message)
 
     # converts message to numberical form
@@ -34,19 +34,20 @@ class RSA:
         self.get_modulus()
         self.get_totient()
         self.get_encryption_exponent()
-        self.get_ciphertext()
-        # print("message(m):" + str(self.m))
-        print("large prime(p):" + str(self.p))
-        print("another large prime(q):" + str(self.q))
-        print("modulus(n):" + str(self.n))
-        print("totient(t):" + str(self.t))
-        print("encryption exponent(e):" + str(self.e))
-        print("ciphertext(c):" + str(self.c))
+        return self.get_ciphertext()
+        # print("message(m):" + self.m)
+        # print("large prime(p):" + str(self.p))
+        # print("another large prime(q):" + str(self.q))
+        # print("modulus(n):" + str(self.n))
+        # print("totient(t):" + str(self.t))
+        # print("encryption exponent(e):" + str(self.e))
+        # print("ciphertext(c):" + str(self.c))
 
 
     # message decryptor
-    def decrypt(self):
+    def decrypt(self, message):
         print("here")
+        return 0
 
     # gets p and q, the primes
     def generate_primes(self):
@@ -89,8 +90,14 @@ class RSA:
         self.e=e
 
     def get_ciphertext(self):
-        self.c=((self.m)^(self.e))%self.n
+        cypher_list=list()
+        for x in self.m:
+            cypher_list.append((int(x)^(self.e))%self.n)
+        return cypher_list
+
 
 # RSA a message
-x=RSA(message="Hello World")
-# x.encrypt()
+x=RSA(message="Alyssa")
+encrypted_message=x.encrypt()
+print(encrypted_message)
+decrypted_message=x.decrypt(encrypted_message)
