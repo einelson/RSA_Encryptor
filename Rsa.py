@@ -30,11 +30,16 @@ class RSA:
     # messaege encryptor
     def encrypt(self):
         # for now
-        self.generate_primes()
-        self.get_modulus()
-        self.get_totient()
-        self.get_encryption_exponent()
-        return self.get_ciphertext()
+        p,q=self.generate_primes()
+        n=self.get_modulus(p,q)
+        t=self.get_totient(p,q)
+        e=self.get_encryption_exponent(t)
+        
+        d=self.get_decryption_exponent(t,e)
+        
+        # return encrypted message
+        return self.get_ciphertext(e,n),n,d
+
         # print("message(m):" + self.m)
         # print("large prime(p):" + str(self.p))
         # print("another large prime(q):" + str(self.q))
@@ -45,59 +50,67 @@ class RSA:
 
 
     # message decryptor
-    def decrypt(self, message):
+    def decrypt(self, cypher_text,n,d):
         print("here")
         return 0
 
     # gets p and q, the primes
     def generate_primes(self):
-        self.get_p()
-        self.get_q()
+        p=self.get_p
+        q=self.get_q(p)
+        print('here1')
+        return p,q
 
     # generate random large prime
     def get_p(self):
-        self.p= number.getPrime(100)
+        return number.getPrime(100)
 
     # generate another large prime different than p but with same number of digits
-    def get_q(self):
+    def get_q(self,p):
         q= number.getPrime(100)
         # make sure that p and q are the same length and not the same number number
-        while len(str(q))!=len(str(self.p)) or q==self.p:
+        while len(str(q))!=len(str(p)) or q==p:
             q= number.getPrime(100)
-        self.q=q
+            # print(len(str(q))+len(str(p)))
+            print(q)
+            print(q)
+        return q
 
     # gets the modulus
-    def get_modulus(self):
-        n=self.p*self.q
+    def get_modulus(self,p,q):
+        n=p*q
         # sheck to make sure the modulus is larger than the message
         # if len(n) < len(self.m):
         #     self.generate_primes()
         #     n=self.p*self.q
-        self.n=n
+        return n
         
     # gets the totient
-    def get_totient(self):
-        t=(self.p-1)*(self.q-1)
-        self.t=t
+    def get_totient(self,p,q):
+        t=(p-1)*(q-1)
+        return t
 
-    def get_encryption_exponent(self):
+    def get_encryption_exponent(self,t):
         # coprime to t
         # use isprime function. this will probably be inefficient for now
-        e=self.t
-        e=e-1
+        e=t-1
         while(isprime(e)!= True):
             e=e-1
-        self.e=e
+        return e
 
-    def get_ciphertext(self):
+    def get_decryption_exponent(self,t,e):
+        return e%t
+
+    def get_ciphertext(self,e,n):
         cypher_list=list()
         for x in self.m:
-            cypher_list.append((int(x)^(self.e))%self.n)
+            cypher_list.append((int(x)^(e))%n)
         return cypher_list
 
 
 # RSA a message
 x=RSA(message="Alyssa")
-encrypted_message=x.encrypt()
+encrypted_message,n,d=x.encrypt()
 print(encrypted_message)
-decrypted_message=x.decrypt(encrypted_message)
+decrypted_message=x.decrypt(encrypted_message,n,d)
+print(decrypted_message)
