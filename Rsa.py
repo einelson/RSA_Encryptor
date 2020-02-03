@@ -17,6 +17,7 @@ class RSA:
     def __init__(self,message):
         # convert message to binary
         self.m=self.convert_to_binary(message)
+        # print(self.m)
 
     # converts message to numberical form
     def convert_to_binary(self, message):
@@ -34,9 +35,7 @@ class RSA:
         n=self.get_modulus(p,q)
         t=self.get_totient(p,q)
         e=self.get_encryption_exponent(t)
-        
         d=self.get_decryption_exponent(t,e)
-        
         # return encrypted message
         return self.get_ciphertext(e,n),n,d
 
@@ -51,14 +50,16 @@ class RSA:
 
     # message decryptor
     def decrypt(self, cypher_text,n,d):
-        print("here")
-        return 0
+        decrypted_message=list()
+        for c in cypher_text:
+            decrypted_message.append(str((c^d)%n))
+        # convery binary to string of letters
+        return ''.join([chr(int(x, 2)) for x in decrypted_message])
 
     # gets p and q, the primes
     def generate_primes(self):
-        p=self.get_p
+        p=self.get_p()
         q=self.get_q(p)
-        print('here1')
         return p,q
 
     # generate random large prime
@@ -71,9 +72,6 @@ class RSA:
         # make sure that p and q are the same length and not the same number number
         while len(str(q))!=len(str(p)) or q==p:
             q= number.getPrime(100)
-            # print(len(str(q))+len(str(p)))
-            print(q)
-            print(q)
         return q
 
     # gets the modulus
@@ -109,8 +107,10 @@ class RSA:
 
 
 # RSA a message
-x=RSA(message="Alyssa")
+x=RSA(message="Hello World in RSA")
 encrypted_message,n,d=x.encrypt()
+print('Encrypted Message:')
 print(encrypted_message)
 decrypted_message=x.decrypt(encrypted_message,n,d)
+print('Decrypted Message:')
 print(decrypted_message)
