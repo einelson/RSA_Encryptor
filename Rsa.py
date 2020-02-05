@@ -39,15 +39,6 @@ class RSA:
         # return encrypted message
         return self.get_ciphertext(e,n),n,d
 
-        # print("message(m):" + self.m)
-        # print("large prime(p):" + str(self.p))
-        # print("another large prime(q):" + str(self.q))
-        # print("modulus(n):" + str(self.n))
-        # print("totient(t):" + str(self.t))
-        # print("encryption exponent(e):" + str(self.e))
-        # print("ciphertext(c):" + str(self.c))
-
-
     # message decryptor
     def decrypt(self, cypher_text,n,d):
         decrypted_message=list()
@@ -90,13 +81,11 @@ class RSA:
 
     def get_encryption_exponent(self,t):
         # coprime to t
-        # use isprime function. this will probably be inefficient for now
-        e=t-1
-        while(isprime(e)!= True):
-            e=e-1
-        return e
+        return 65537
 
     def get_decryption_exponent(self,t,e):
+        # inverse of e %t
+        # return (e^(-1))%t
         return e%t
 
     def get_ciphertext(self,e,n):
@@ -107,7 +96,7 @@ class RSA:
 
 
 # RSA a message
-x=RSA(message="Hello World in RSA")
+x=RSA(message="Hello World")
 encrypted_message,n,d=x.encrypt()
 print('Encrypted Message:')
 print(encrypted_message)
