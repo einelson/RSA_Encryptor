@@ -85,7 +85,6 @@ class RSA:
 
     def get_decryption_exponent(self,t,e):
         # inverse of e %t
-        # return (e^(-1))%t
         return e%t
 
     def get_ciphertext(self,e,n):
@@ -96,7 +95,7 @@ class RSA:
 
 
 # RSA a message
-x=RSA(message="Hello World")
+x=RSA(message="Long message that is very long. akldjf alksuhiluxchviuzdfhgiufsdhgiudshiguhsdfiug hdiufh gsiofdg hihhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhdjf h  askdjhf fkajds fhlkajs fd askjd hfaksljd fhalksjd hfalksjd fhksjd hfsadj fhaskjdf haksdj hfksajd fhaklsjd fsakdlfj hsakdjf laksdhf hfaisdu fhalisduhg lasidufias dufhalisdfh")
 encrypted_message,n,d=x.encrypt()
 print('Encrypted Message:')
 print(encrypted_message)
